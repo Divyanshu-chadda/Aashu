@@ -1,54 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- cute redeploy -->
-
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>💖 Will you be my Valentine?</title>
 
-  <!-- Confetti library -->
+  <!-- Confetti -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 
   <style>
-    :root {
-      --yes: #ff4d7d;
-      --yesHover: #ff2f6f;
-      --card: rgba(255, 255, 255, 0.88);
-    }
-
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
-      min-height: 100svh;
+      min-height: 100vh;
       display: grid;
       place-items: center;
+      font-family: system-ui, sans-serif;
       background:
         radial-gradient(circle at 20% 20%, #fff0f6 0%, transparent 40%),
         radial-gradient(circle at 80% 30%, #e0f7ff 0%, transparent 40%),
         linear-gradient(135deg, #ffdde1, #ee9ca7);
-      font-family: "Segoe UI", system-ui, sans-serif;
       overflow: hidden;
       padding: 16px;
     }
 
-    /* FLOATING HEART EMOJIS */
     body::before {
-      content: "💖 💕 💗 💓 💞 💘 💖 💕";
+      content: "💖 💕 💗 💓 💞 💘";
       position: fixed;
       inset: 0;
       font-size: 32px;
       opacity: 0.12;
       display: grid;
       place-items: center;
-      animation: floatHearts 14s linear infinite;
+      animation: float 12s linear infinite;
       pointer-events: none;
     }
 
-    @keyframes floatHearts {
+    @keyframes float {
       from { transform: translateY(0); }
       to { transform: translateY(-80px); }
     }
@@ -56,40 +45,30 @@
     #confettiCanvas {
       position: fixed;
       inset: 0;
-      width: 100vw;
-      height: 100vh;
       pointer-events: none;
-      z-index: 9999;
+      z-index: 999;
     }
 
     .card {
-      width: min(720px, 92vw);
-      padding: 28px 22px;
-      background: var(--card);
+      background: rgba(255,255,255,0.88);
       backdrop-filter: blur(14px);
-      border-radius: 30px;
+      padding: 28px 22px;
+      border-radius: 28px;
+      width: min(720px, 92vw);
       text-align: center;
-      box-shadow: 0 30px 80px rgba(0, 0, 0, .18);
-    }
-
-    .art {
-      width: min(260px, 80vw);
-      margin: 0 auto 10px;
-      display: block;
-      filter: drop-shadow(0 12px 18px rgba(0, 0, 0, .15));
+      box-shadow: 0 30px 80px rgba(0,0,0,.18);
     }
 
     h1 {
       font-size: clamp(26px, 4vw, 44px);
-      margin: 12px 0 18px;
+      margin-bottom: 16px;
     }
 
-    .button-zone {
+    .zone {
       position: relative;
       width: min(520px, 92%);
       height: 150px;
       margin: 0 auto;
-      touch-action: none;
     }
 
     button {
@@ -102,31 +81,30 @@
       border-radius: 999px;
       border: none;
       cursor: pointer;
-      box-shadow: 0 14px 30px rgba(0, 0, 0, .18);
-      user-select: none;
+      box-shadow: 0 14px 30px rgba(0,0,0,.18);
       transition: transform .15s ease, background .15s ease;
     }
 
-    #yesBtn {
+    #yes {
       left: 18%;
-      background: var(--yes);
+      background: #ff4d7d;
       color: #fff;
     }
 
-    #yesBtn:hover {
-      background: var(--yesHover);
+    #yes:hover {
+      background: #ff2f6f;
     }
 
-    #noBtn {
+    #no {
       left: 62%;
       background: #f3f4f6;
-      color: #111827;
+      color: #111;
     }
 
     .hint {
       margin-top: 12px;
-      font-size: 14px;
       opacity: .75;
+      font-size: 14px;
     }
 
     .result {
@@ -135,26 +113,9 @@
       animation: pop .4s ease;
     }
 
-    .result h2 {
-      font-size: clamp(32px, 4.5vw, 48px);
-      margin: 10px 0;
-    }
-
-    .fireworks {
-      width: min(380px, 90vw);
-      margin: 0 auto;
-      display: block;
-    }
-
     @keyframes pop {
-      from {
-        transform: scale(.95);
-        opacity: 0;
-      }
-      to {
-        transform: scale(1);
-        opacity: 1;
-      }
+      from { transform: scale(.95); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
     }
   </style>
 </head>
@@ -163,158 +124,116 @@
   <canvas id="confettiCanvas"></canvas>
 
   <main class="card">
-
-    <!-- Cute animal with heart -->
-    <svg class="art" viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="fur" x1="0" x2="1">
-          <stop offset="0" stop-color="#f7c7a1" />
-          <stop offset="1" stop-color="#f2a97b" />
-        </linearGradient>
-        <linearGradient id="heart" x1="0" x2="1">
-          <stop offset="0" stop-color="#ff4d7d" />
-          <stop offset="1" stop-color="#ff1f68" />
-        </linearGradient>
-      </defs>
-
-      <path d="M250 50 C250 33 270 25 282 38
-               C294 25 314 33 314 50
-               C314 78 282 92 282 106
-               C282 92 250 78 250 50Z" fill="url(#heart)" />
-
-      <path d="M90 120 C90 70 140 40 190 60
-               C240 40 290 70 290 120
-               C290 180 240 210 190 210
-               C140 210 90 180 90 120Z" fill="url(#fur)" />
-
-      <path d="M110 92 L95 55 L140 78 Z" fill="#f2a97b" />
-      <path d="M270 92 L285 55 L240 78 Z" fill="#f2a97b" />
-
-      <circle cx="160" cy="130" r="8" />
-      <circle cx="220" cy="130" r="8" />
-
-      <path d="M190 144 C186 144 182 148 182 152
-               C182 160 190 164 190 170
-               C190 164 198 160 198 152
-               C198 148 194 144 190 144Z" fill="#ff7aa2" />
-    </svg>
-
     <h1>💖 Aashu, will you be my Valentine? 💌</h1>
 
-    <section class="button-zone" id="zone">
-      <button id="yesBtn">Yes 💕</button>
-      <button id="noBtn">No 🙈</button>
-    </section>
+    <div class="zone" id="zone">
+      <button id="yes">Yes 💕</button>
+      <button id="no">No 🙈</button>
+    </div>
 
-    <div class="hint" id="hint">😈 The “No” button is feeling shy today…</div>
+    <div class="hint" id="hint">😈 The “No” button is a little shy…</div>
 
-    <section class="result" id="result">
+    <div class="result" id="result">
       <h2>YAYYY! 🥹💖</h2>
-      <img class="fireworks"
-        src="https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif"
-        alt="Fireworks" />
-    </section>
+      <p>Best decision ever 🫶</p>
+    </div>
   </main>
 
   <script>
     const zone = document.getElementById("zone");
-    const yesBtn = document.getElementById("yesBtn");
-    const noBtn = document.getElementById("noBtn");
+    const yes = document.getElementById("yes");
+    const no = document.getElementById("no");
     const result = document.getElementById("result");
     const hint = document.getElementById("hint");
+    const canvas = document.getElementById("confettiCanvas");
 
-    const confettiCanvas = document.getElementById("confettiCanvas");
+    const noTexts = [
+      "No 🙈",
+      "Are you sure? 😳",
+      "Think again 🥺",
+      "Plsss 😭",
+      "Don’t break my heart 💔",
+      "Okay stop 😵‍💫"
+    ];
+    let noIndex = 0;
 
-    function resizeConfettiCanvas() {
-      const dpr = Math.max(1, window.devicePixelRatio || 1);
-      confettiCanvas.width = Math.floor(window.innerWidth * dpr);
-      confettiCanvas.height = Math.floor(window.innerHeight * dpr);
+    let yesScale = 1;
+
+    function resizeCanvas() {
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = innerWidth * dpr;
+      canvas.height = innerHeight * dpr;
     }
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
 
-    resizeConfettiCanvas();
-    window.addEventListener("resize", resizeConfettiCanvas);
-
-    const confettiInstance = confetti.create(confettiCanvas, {
+    const confettiInstance = confetti.create(canvas, {
       resize: false,
       useWorker: true
     });
 
-    function fullScreenConfetti() {
+    function celebrate() {
       const end = Date.now() + 1600;
-
       (function frame() {
         confettiInstance({
           particleCount: 12,
-          spread: 90,
+          spread: 100,
           startVelocity: 45,
-          ticks: 180,
-          origin: { x: Math.random(), y: Math.random() * 0.3 }
+          origin: { x: Math.random(), y: Math.random() * 0.4 }
         });
         if (Date.now() < end) requestAnimationFrame(frame);
       })();
-
-      setTimeout(() => {
-        confettiInstance({
-          particleCount: 300,
-          spread: 140,
-          startVelocity: 60,
-          ticks: 220,
-          origin: { x: 0.5, y: 0.55 }
-        });
-      }, 300);
-    }
-
-    let yesScale = 1;
-    function growYes() {
-      yesScale = Math.min(2.2, yesScale + 0.1);
-      yesBtn.style.transform = `translateY(-50%) scale(${yesScale})`;
     }
 
     function clamp(n, min, max) {
       return Math.max(min, Math.min(max, n));
     }
 
-    function moveNo(px, py) {
+    function moveNo(x, y) {
       const z = zone.getBoundingClientRect();
-      const b = noBtn.getBoundingClientRect();
+      const b = no.getBoundingClientRect();
 
-      let dx = (b.left + b.width / 2) - px;
-      let dy = (b.top + b.height / 2) - py;
+      let dx = (b.left + b.width/2) - x;
+      let dy = (b.top + b.height/2) - y;
       let mag = Math.hypot(dx, dy) || 1;
-      dx /= mag;
-      dy /= mag;
+      dx /= mag; dy /= mag;
 
-      let newLeft = (b.left - z.left) + dx * 150;
-      let newTop = (b.top - z.top) + dy * 150;
+      let left = (b.left - z.left) + dx * 160;
+      let top = (b.top - z.top) + dy * 160;
 
-      newLeft = clamp(newLeft, 0, z.width - b.width);
-      newTop = clamp(newTop, 0, z.height - b.height);
+      left = clamp(left, 0, z.width - b.width);
+      top = clamp(top, 0, z.height - b.height);
 
-      noBtn.style.left = newLeft + "px";
-      noBtn.style.top = newTop + "px";
-      noBtn.style.transform = "none";
+      no.style.left = left + "px";
+      no.style.top = top + "px";
+      no.style.transform = "none";
 
-      growYes();
+      no.textContent = noTexts[noIndex];
+      noIndex = (noIndex + 1) % noTexts.length;
+
+      yesScale = Math.min(3, yesScale + 0.18);
+      yes.style.transform = `translateY(-50%) scale(${yesScale})`;
     }
 
     zone.addEventListener("pointermove", e => {
-      const b = noBtn.getBoundingClientRect();
+      const b = no.getBoundingClientRect();
       const d = Math.hypot(
-        (b.left + b.width / 2) - e.clientX,
-        (b.top + b.height / 2) - e.clientY
+        (b.left + b.width/2) - e.clientX,
+        (b.top + b.height/2) - e.clientY
       );
       if (d < 140) moveNo(e.clientX, e.clientY);
     });
 
-    noBtn.addEventListener("click", e => e.preventDefault());
+    no.addEventListener("click", e => e.preventDefault());
 
-    yesBtn.addEventListener("click", () => {
+    yes.addEventListener("click", () => {
       zone.style.display = "none";
       hint.style.display = "none";
       result.style.display = "block";
-      resizeConfettiCanvas();
-      fullScreenConfetti();
+      resizeCanvas();
+      celebrate();
     });
   </script>
 </body>
 </html>
+  
